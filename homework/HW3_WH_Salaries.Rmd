@@ -9,6 +9,7 @@ In this assignment, we will be working with a dataset containing information abo
 You will need to load the tidyverse library
 
 ```{r}
+library(tidyverse)
 ```
 
 Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/biden_wh_salaries_2024.csv. You will create a dataframe called `wh_salaries` that contains the data from this URL.
@@ -16,6 +17,7 @@ Then you'll load the data from the web. The URL for the data is: https://raw.git
 ### Task 2: Load the Data and Describe It
 
 ```{r}
+wh_salaries <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/biden_wh_salaries_2024.csv")
 ```
 ### Task 3: Describe the Data
 
@@ -23,12 +25,18 @@ You should examine that dataframe carefully by clicking on it in the Environment
 
 ANSWER HERE
 
+An interesting thing is that the detailees made the most money comapred to employees. There were also a few people whose salaried were 0. Some of them were detailees so they could be paid by different places, but some were employed policy advisors.
+
 ### Task 4: Calculate the Mean and Median of the Salaries
 
 Write code to calculate the mean and median of the salaries in the dataset using the `summarize()` function. You don't need to make a new dataframe, just display the results.
 
 ```{r}
-
+wh_salaries |>
+  summarise(
+    mean = mean(salary),
+    median = median(salary)
+  )
 ```
 
 ### Task 5: Add in the minimum and maximum salaries
@@ -36,7 +44,13 @@ Write code to calculate the mean and median of the salaries in the dataset using
 Take the code you just wrote and add in the minimum and maximum salaries (the functions for that are `min()` and `max()`). Your results should show four columns: mean_salary, median_salary, min_salary, max_salary.
 
 ```{r}
-
+wh_salaries |>
+  summarise(
+    mean = mean(salary),
+    median = median(salary),
+    max = max(salary),
+    min = min(salary)
+  )
 ```
 
 ### Task 6: Describe the Results
@@ -45,8 +59,13 @@ Write a couple of sentences describing the results of your analysis. What do the
 
 ANSWER HERE
 
+The mean and medians are similar at around 110000
+ which means that there weren't any huge outliers that skewed the data. The max is 251254 which is about 2.5 times the mena and the min is 0 which doesn't tell us that much except that some people didn't get a salary from the white house.
+ 
 ### Task 7: Story Idea
 
 Based on the data, what is your best story idea? What is the next step you would take to develop that story idea?
 
 ANSWER HERE
+
+The best idea I have is to take a look at what the most money is being spent on within the white house. To do this I would probably have to do more research on what exactly each job entails within the WH. FOr instance, associate counsels account for a good chunk of money but their jobs are non-descript so I have to make them more specific.
