@@ -9,7 +9,7 @@ In this assignment, we will be working with a dataset reporting the number of cr
 You will need to load the tidyverse library
 
 ```{r}
-
+library(tidyverse)
 ```
 
 Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_crime_totals_2024.csv. You will create a dataframe called `pg_crime` that contains the data from this URL.
@@ -17,6 +17,7 @@ Then you'll load the data from the web. The URL for the data is: https://raw.git
 ### Task 2: Load the Data and Describe It
 
 ```{r}
+pg_crime <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_crime_totals_2024.csv")
 ```
 ### Task 3: Describe the Data
 
@@ -24,12 +25,16 @@ You should examine that dataframe carefully by clicking on it in the Environment
 
 ANSWER HERE
 
+I mean I feel like the greater offenses like homicide and sex offense will lawyas bee more important than something like accidents and breaking and entering. I don't understnad the difference between robbery vehicle and auto stolen, does this just mean the vehicle was not a car? It could also get hard to explain that there are three different categorizations for stealing.
+
 ### Task 4: Calculating Averages
 
 Calculate the total number of incidents per month for each category using `mutate()`, calling the new column `total_incidents`. Then calculate the average number of incidents per month for each category of crime, calling the new column `average_incidents`. Assign the result to a new dataframe called `pg_crime_averages`.
 
 ```{r}
-
+pg_crime_averages <- pg_crime |> 
+  mutate(total_incidents = Jan + Feb + Mar + Apr + May + Jun + Jul + Aug + Sep + Oct + Nov + Dec,
+         average_incidents = total_incidents/12)
 ```
 
 ### Task 5: Describe the Averages
@@ -38,12 +43,17 @@ Examine the new dataframe, `pg_crime_averages`, by clicking on it in the Environ
 
 ANSWER HERE
 
+The highest number of incidents occurred in the accient, auto stolen, and theft auto. The lowest amount of incidents are in breaking and entering other, homicide, and robbery residential. There's a lot of crime surrounding cars in PG county. Robbery residential has N/As within it's data, are thise supposed to 0 or were they just not keeping track that month.
 
 ### Task 6: Testing a Theory
 
 One theory about crime is that it is more likely to occur in the summer months. Test this theory by creating three new columns using `mutate()` that calculate the percentage change compared to the average for each category of crime for the months of June, July, and August. Call the new columns `june_change`, `july_change`, and `august_change`. Assign the result to a new dataframe called `summer_crime_averages`.
 
 ```{r}
+summer_crime_averages <- pg_crime_averages |>
+  mutate(june_change = ((Jun - average_incidents)/average_incidents) * 100,
+         july_change = ((Jul - average_incidents)/average_incidents) * 100,
+         august_change = ((Aug - average_incidents)/average_incidents) * 100)
 ```
 
 ### Task 7: Describe the Summer Crime Averages
@@ -52,11 +62,17 @@ Look at the `summer_crime_averages` dataframe by clicking on it in the Environme
 
 ANSWER HERE
 
+Homicides, sex offenses, and auto related stealing inreases during those months. However, a lot of the other categories stayed relativvely the same. The theory probably came about because some of the worst crimes increased their frequency during the summer months.
+
 ### Task 8: What's the Story?
 
 Write up a lede and nutgraf of a story focused on the crime data in Prince George's County. It could be from any of the dataframes you've created in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
 
 ANSWER HERE
+
+The largesst number of crimes committed in Prince Goerge's County happen to cars. 
+
+There were 4,790 automobiles stolen within a year in the county the highest number of any crime. Regular thefts accounted for 3,409 incidents while thafts from automobiles accounted for 4,703 incidents.
 
 ### Task 9: Save Your Work and Put it on GitHub
 
