@@ -9,6 +9,8 @@ In this assignment, we will be working with a dataset of total crimes reported b
 You will need to load the tidyverse library and the janitor library
 
 ```{r}
+library(tidyverse)
+library(janitor)
 ```
 
 Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/md_cities_crime_2019_2020.csv. You will create a dataframe called `md_cities` that contains the data from this URL.
@@ -16,12 +18,19 @@ Then you'll load the data from the web. The URL for the data is: https://raw.git
 ### Task 2: Load the Data
 
 ```{r}
+md_cities <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/md_cities_crime_2019_2020.csv")
 ```
 ### Task 3: Calculating Rates
 
 Calculate violent and property crime rates for each city for both years using `mutate()`. You'll create four new columns: `violent_rate_2019`, `property_rate_2019`, `violent_rate_2020`, and `property_rate_2020`. You'll need to figure out the proper unit rate, given that there are varying populations. There's no perfect choice; choose the one that works best for you. Save the results to a new dataframe called `md_cities_rates`.
 
 ```{r}
+md_cities_rates <- md_cities |> 
+  mutate(violent_rate_2019 = (violent2019/pop2019)*10000,
+         violent_rate_2020 = (violent2020/pop2020)*10000,
+         property_rate_2019 = (property2019/pop2019)*10000,
+         property_rate_2020 = (property2020/pop2020)*10000
+         )
 ```
 
 ### Task 4: Describe the Rates
@@ -30,12 +39,16 @@ Examine the new dataframe, `md_cities_rates`, by clicking on it in the Environme
 
 ANSWER HERE
 
+Ocean City has the overall highest level of crime. It had the highest level of property crime in both years and was only beaten out by Baltimore in 2019. Ocean City also jumped like 100 ponts in 2020 in terms of violent crime. The property crime rate for Ocean City is also much higher than anywhere else. Comparatively, places like Frederick, Gathersburg, and Rockville with some of the highest populations outside of Baltimore have pretty low violent and property crime rates. The story i would go with is that places with larger populations don't nessecarily have higher crime rates and why that is the case.
 
 ### Task 5: Calculate Percentage Change
 
 Let's add two percentage change columns to your dataframe: one for violent crime rates and one for property crime rates. You'll calculate the percentage change between 2019 and 2020 for each city. Save the results to a new dataframe called `md_cities_change`.
 
 ```{r}
+md_cities_change <- md_cities_rates |>
+  mutate(vio_change = ((violent_rate_2020 - violent_rate_2019)/violent_rate_2019)*100,
+         prop_change = ((property_rate_2020 - property_rate_2019)/property_rate_2019)*100)
 ```
 
 ### Task 7: Describe Percentage Changes
@@ -44,11 +57,17 @@ Look at the `md_cities_change` dataframe by clicking on it in the Environment ta
 
 ANSWER HERE
 
+Frederick had the highest drop in violent and property crime outside of places that have like one or two occurances of crime. I think what's more natable is places in Montgomery county having high percentage change meaning that there were more crime. 
+
 ### Task 8: Tell the Best Story
 
 Write up a lede and nutgraf of a story with the _best_ story idea you've found in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
 
 ANSWER HERE
+
+Baltimore has found both its violent and property crime rates dropping between 2019 and 2020.
+
+Baltimore is notorious for its violent crime, and for good reason, having the second highest ciolent crime rate at 160 per 10,000 people. However, between 2019 and 2020 the violent crime rate has fallen by 12.88% and its property crime followed as well, dropping by 25.93%.
 
 ### Task 9: Save Your Work and Put it on GitHub
 
