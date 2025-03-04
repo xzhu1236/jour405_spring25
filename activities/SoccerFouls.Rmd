@@ -39,7 +39,8 @@ matches |>
 ```{r}
 matches |>
   ggplot() +
-  geom_point(aes(x = goal_diff, y = fouls))
+  geom_point(aes(x = goal_diff, y = fouls)) +
+  geom_smooth(aes(x = goal_diff, y = fouls, method = "lm"))
 ```
 
 ### Task 6: Describe the results of both the correlation calculation and the scatterplot.
